@@ -37,3 +37,8 @@ class User(BaseModel):
                 "Name must be between 2 and 50 characters long"
             )
         return value
+    
+
+class LoginModel(BaseModel):
+    email:EmailStr=Field(...)
+    password:str=Field(..., min_length=6)

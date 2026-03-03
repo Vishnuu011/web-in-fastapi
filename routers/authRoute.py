@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from typing import Any
-from controllers.authController import registerController
+from controllers.authController import registerController, loginController
 from models.authModel import User as UserModel
+from models.authModel import LoginModel 
 from config.db import user_collection
 
 
@@ -22,4 +23,20 @@ DELETE -> delete the data
 @router.post("/register")
 async def registerView(data: UserModel):
 
-    return await registerController(data.dict())
+    try:
+        return await registerController(data)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred during registration: {str(e)}"
+        )
+
+@router.post("/login")
+async def loginView(data: LoginModel):
+    try:
+        return await loginController(data)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred during login: {str(e)}"
+        )
