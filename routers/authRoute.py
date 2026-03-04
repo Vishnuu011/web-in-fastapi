@@ -44,7 +44,7 @@ async def loginView(data: LoginModel):
         )
     
 
-@router.get("/profile")
+@router.get("/profiles")
 async def profileView(user_id = Depends(verifyToken)):
     try:
         return await profileController(user_id)
